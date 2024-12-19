@@ -28,7 +28,7 @@ local LawNotifierVersion = "1.0"
 
 concommand.Add("lawnotifier_info", function()
 	local InfoTable = {
-		"https://steamcommunity.com/sharedfiles/filedetails/?id=3292250208 created by Haze_of_dream",
+		"https://steamcommunity.com/sharedfiles/filedetails/?id=3387060268 created by Haze_of_dream",
 		"",
 		"Contact at: ",
 		"STEAM_0:1:75838598",
