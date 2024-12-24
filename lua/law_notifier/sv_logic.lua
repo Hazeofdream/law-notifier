@@ -84,6 +84,11 @@ timer.Simple(0, function()
 
         local law = Laws[i]
 
+        net.Start("notify_law_removed")
+            net.WriteString(team.GetName(ply:Team()))
+            net.WriteString(law)
+        net.Broadcast()
+
         table.remove(Laws, i)
 
         umsg.Start("DRP_RemoveLaw")
@@ -93,11 +98,6 @@ timer.Simple(0, function()
         hook.Run("removeLaw", i, law, ply)
 
         DarkRP.notify(ply, 0, 2, DarkRP.getPhrase("law_removed"))
-
-        net.Start("notify_law_removed")
-            net.WriteString(team.GetName(ply:Team()))
-            net.WriteString(args)
-        net.Broadcast()
 
         return ""
     end
@@ -117,18 +117,20 @@ timer.Simple(0, function()
             DarkRP.notify(ply, 1, 4, message ~= nil and message or DarkRP.getPhrase("unable", GAMEMODE.Config.chatCommandPrefix .. "resetLaws", ""))
             return ""
         end
+
+        if #Laws > #FixedLaws then
+            DarkRP.notify(ply, 1, 4, DarkRP.getPhrase("default_law_change_denied"))
+            return ""
+        end
     
         hook.Run("resetLaws", ply)
 
         -- prevent notification spam if nothing was actually reset
         -- this will also account for default laws that were modified
         
-        if #Laws > #FixedLaws then
-            net.Start("notify_law_reset")
-                net.WriteString(team.GetName(ply:Team()))
-                net.WriteString(args)
-            net.Broadcast()
-        end
+        net.Start("notify_law_reset")
+            net.WriteString(team.GetName(ply:Team()))
+        net.Broadcast()
 
         DarkRP.resetLaws()
     
@@ -138,5 +140,3 @@ timer.Simple(0, function()
     end
     DarkRP.defineChatCommand("resetLaws", resetLaws)
 end)
-
---#NoSimplerr#

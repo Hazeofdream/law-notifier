@@ -16,15 +16,14 @@ end)
 
 net.Receive("notify_law_reset", function()
 	local JobName = net.ReadString()
-	local Msg = net.ReadString()
 
     surface.PlaySound("buttons/lightswitch2.wav")
-    chat.AddText(Color(255, 20, 20, 255), "[DarkRP] ", Color(200, 200, 200, 255), "The Mayor has reset all laws back to their defaults.")
+    chat.AddText(Color(255, 20, 20, 255), "[DarkRP] ", Color(200, 200, 200, 255), string.format("The %s has reset all laws back to their defaults.", JobName))
 end)
 
 -- Developer Information
 
-local LawNotifierVersion = "1.0"
+local LawNotifierVersion = "1.1"
 
 concommand.Add("lawnotifier_info", function()
 	local InfoTable = {
@@ -41,5 +40,3 @@ concommand.Add("lawnotifier_info", function()
 		print(msg)
 	end
 end)
-
---#NoSimplerr#
